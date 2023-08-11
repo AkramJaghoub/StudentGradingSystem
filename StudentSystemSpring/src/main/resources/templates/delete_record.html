@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Record</title>
+
+    <style>
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .top-bar {
+            background-color: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-weight: bold;
+            border-bottom: 5px solid #f0db4f;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            margin: 20px;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            max-width: 400px;
+            margin-right: 20px;
+            height: fit-content;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e1e1e1;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        button[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .table-container {
+            width: 70%;
+        }
+
+        table {
+            width: 70%;
+            margin: 30px auto;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .error-message, .success-message {
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            background-color: #d9534f;
+        }
+
+        .success-message {
+            background-color: #5bc0de;
+        }
+
+    </style>
+</head>
+<body>
+<div class="top-bar">Student grading system</div>
+<div class="container">
+    <div class="form-container">
+        <form th:action="@{/deleteRecord}" th:method="post">
+            <input type="hidden" name="table" th:value="${table}">
+            <label for="idToDelete">ID of the record to delete:</label>
+            <input type="text" name="idToDelete" id="idToDelete" required th:value="${idToDelete}">
+            <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+            <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+            <button type="submit">Delete Record</button>
+        </form>
+    </div>
+
+    <!-- Display the table content -->
+    <div class="table-container">
+        <table>
+            <tr>
+                <th th:each="header : ${headers}" th:text="${header}"></th>
+            </tr>
+            <tr th:each="row : ${rowsData}">
+                <td th:each="cell : ${row}" th:text="${cell}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
